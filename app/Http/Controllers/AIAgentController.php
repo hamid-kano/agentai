@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use OpenAI;
 
 class AIAgentController extends Controller
@@ -72,7 +73,7 @@ class AIAgentController extends Controller
     private function searchRestaurants($args)
     {
         // مثال Database
-        $restaurants = \DB::table("restaurants")
+        $restaurants = DB::table("restaurants")
             ->where("name", "LIKE", "%".$args["keyword"]."%")
             ->when($args["only_open"] ?? false, function ($q) {
                 $q->where("is_open", 1);
